@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+        <link rel="stylesheet" href="">
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block header %}
+    <h1>{{ header.h1 }}</h1>
+{% endblock %}
+
+{% block body %}
+    <img src="" href="" />
+    {{ form_start(form) }}
+        <div class="d-flex">
+            <div class="">
+                {{ form_row(form.length) }}
+            </div>
+            <div class="" id="some-custom-id">
+                {{ form_row(form.width) }}
+            </div>
+        </div>
+        <div class="">
+            {{ form_row(form.bill) }}
+        </div>
+
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+    {{ form_end(form) }}
+
+    {# si le formulaire a été envoyé et que les données sont non-nulles #}
+    {% if submittedData %}
+        <section>
+            <h2>{{ section.h2 }}</h2>
+            {{ dump(data) }}
+        </section>
+    {% endif %}
+{% endblock %}
