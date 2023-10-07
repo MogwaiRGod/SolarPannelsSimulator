@@ -13,14 +13,17 @@ class Pannel
     #[ORM\Column]
     private ?int $id = null;
 
+    // en m
     #[ORM\Column(nullable: true)]
-    private ?float $length = null;
+    private static ?float $length = 1.555;
 
+    // en m
     #[ORM\Column(nullable: true)]
-    private ?float $width = null;
+    private static ?float $width = 1.038;
 
+    // en Wc 
     #[ORM\Column(nullable: true)]
-    private ?float $power = null;
+    private static ?float $power = 375;
 
     #[ORM\ManyToOne(inversedBy: 'idPannel')]
     private ?Installation $installation = null;
@@ -30,9 +33,9 @@ class Pannel
         return $this->id;
     }
 
-    public function getLength(): ?float
+    public static function getLength(): ?float
     {
-        return $this->length;
+        return self::$length;
     }
 
     public function setLength(?float $length): static
@@ -42,9 +45,9 @@ class Pannel
         return $this;
     }
 
-    public function getWidth(): ?float
+    public static function getWidth(): ?float
     {
-        return $this->width;
+        return self::$width;
     }
 
     public function setWidth(?float $width): static
@@ -54,12 +57,12 @@ class Pannel
         return $this;
     }
 
-    public function getPower(): ?float
+    public static function getPower(): ?float
     {
-        return $this->power;
+        return self::$power;
     }
 
-    public function setPower(?float $power): static
+    public function setPower($power): static
     {
         $this->power = $power;
 
