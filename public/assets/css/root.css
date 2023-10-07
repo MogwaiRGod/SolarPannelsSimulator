@@ -1,0 +1,28 @@
+:root {
+    /* couleurs */
+    --main-green: #029E3A;
+    --main-yellow: #ECCA41;
+    --medium-green: #67C589;
+    --medium-yellow: #F8DC6D;
+    --light-green: #D7EFDF;
+    --light-yellow: #E5EBC3;
+
+    /* typos */
+    --main-font: 'Onest', 'Montserrat', 'Helvetica', 'Arial', 'Tahoma';
+}
+
+/* navbar */
+.solar-nav-link {
+    font-family: var(--main-font);
+    color: var(--light-green);
+}
+
+/* footer */
+
+/* headings */
+.solar-h1 {
+    font-family: var(--main-font);
+    color: var(--main-yellow);
+}
+
+/* buttons */
