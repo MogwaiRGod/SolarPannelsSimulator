@@ -8,11 +8,17 @@
 {% endblock %}
 
 {% block header %}
+    {# titre de la page #}
     <h1>{{ header.h1 }}</h1>
 {% endblock %}
 
 {% block body %}
-    <img src="" href="" />
+    {# image illustrative #}
+    <div>
+        <img src="{{ asset('images/man_pannel.jpg') }}" href="Homme posant un panneau photovoltaïque" />
+    </div>
+
+    {# le formulaire #}
     {{ form_start(form) }}
             <div class="d-flex">
             <div class="">
@@ -41,6 +47,7 @@
 
     {# si le formulaire a été envoyé #}
     {% if submittedData %}
+        {# section avec les estimations utilisateur #}
         <section>
             <h2>{{ section.h2 }}</h2>
             {{ dump(data) }}
