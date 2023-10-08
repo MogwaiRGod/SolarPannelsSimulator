@@ -1,0 +1,34 @@
+/* image */
+/* container */
+.solar-div-img {
+    flex-direction: column;
+    height: 80vh;
+    overflow: hidden;
+}
+
+/* l'image */
+.solar-img {
+    position: relative;
+    bottom: 20vh;
+    transform: scaleX(-1);
+    width: 100vw;
+    object-fit: cover;
+}
+
+/* le formulaire */
+/* container */
+.solar-form {
+    padding: 3.5rem 1.5rem;
+    z-index: 1;
+    position: absolute;
+    background-color: var(--transparent-white);
+    border: 2px solid var(--medium-green);
+    border-radius: 2rem;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.solar-buttons {
+    width: 50vw;
+    padding: 0;
+}

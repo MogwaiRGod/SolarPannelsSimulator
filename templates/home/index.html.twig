@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="{{ asset('assets/css/templates/home.css') }}">
 {% endblock %}
 
 {% block javascripts %}
@@ -9,48 +9,65 @@
 
 {% block header %}
     {# titre de la page #}
-    <h1 class="solar-h1">{{ header.h1 }}</h1>
+    <h1 class="solar-h1 offset-1 col-8 my-5">{{ header.h1 }}</h1>
 {% endblock %}
 
 {% block body %}
+    <div class="container-homepage mb-5">
     {# image illustrative #}
-    <div>
-        <img src="{{ asset('images/man_pannel.jpg') }}" href="Homme posant un panneau photovoltaïque" />
+        <div class="solar-div-img w-100 justify-content-center">
+        {# le formulaire #}
+            <div class="solar-form offset-3 col-6 d-flex mt-4">
+                {{ form_start(form) }}
+                <h3 class="solar-h3 offset-2">Je calcule mes avantages</h3>
+                    <div class="d-flex offset-2">
+                        <div class="solar-form-row">
+                            {{ form_row(form.firstName) }}
+                        </div>
+                        <div class="solar-form-row">
+                            {{ form_row(form.lastName) }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex col-2">
+                            <svg class="p-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                                <path fill="var(--medium-green)" d="m80-480 400-360 160 144v-104h120v212l120 108H760L480-732 200-480H80Zm280 320v-240h240v240H360Zm80-80h80v-80h-80v80Zm40-40Z"/>
+                            </svg>
+                        </div>
+                        <div class="solar-form-row d-flex col-auto">
+                            {{ form_row(form.length) }}
+                            {{ form_row(form.width) }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex col-2">
+                            <svg class="p-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                                <path fill="var(--medium-green)" d="M240-80q-50 0-85-35t-35-85v-120h120v-560l60 60 60-60 60 60 60-60 60 60 60-60 60 60 60-60 60 60 60-60v680q0 50-35 85t-85 35H240Zm480-80q17 0 28.5-11.5T760-200v-560H320v440h360v120q0 17 11.5 28.5T720-160ZM360-600v-80h240v80H360Zm0 120v-80h240v80H360Zm320-120q-17 0-28.5-11.5T640-640q0-17 11.5-28.5T680-680q17 0 28.5 11.5T720-640q0 17-11.5 28.5T680-600Zm0 120q-17 0-28.5-11.5T640-520q0-17 11.5-28.5T680-560q17 0 28.5 11.5T720-520q0 17-11.5 28.5T680-480ZM240-160h360v-80H200v40q0 17 11.5 28.5T240-160Zm-40 0v-80 80Z"/>
+                            </svg>
+                        </div>
+                        <div class="solar-form-row">
+                            {{ form_row(form.bill) }}
+                        </div>
+                    </div>
+                    <div class="solar-buttons d-flex justify-content-center">
+                        {{ form_row(form.send) }}
+                    </div>
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(form) }}
+                    </div>
+                {{ form_end(form) }}
+            </div>
+            <img class="solar-img" src="{{ asset('images/man_pannel.jpg') }}" href="Homme posant un panneau photovoltaïque" />
+            
+        </div>
+
+        {# si le formulaire a été envoyé #}
+        {% if submittedData %}
+            {# section avec les estimations utilisateur #}
+            <section>
+                <h2>{{ section.h2 }}</h2>
+                {{ dump(data) }}
+            </section>
+        {% endif %}
     </div>
-
-    {# le formulaire #}
-    {{ form_start(form) }}
-            <div class="d-flex">
-            <div class="">
-                {{ form_row(form.firstName) }}
-            </div>
-            <div class="" id="some-custom-id">
-                {{ form_row(form.lastName) }}
-            </div>
-        </div>
-        <div class="d-flex">
-            <div class="">
-                {{ form_row(form.length) }}
-            </div>
-            <div class="" id="some-custom-id">
-                {{ form_row(form.width) }}
-            </div>
-        </div>
-        <div class="">
-            {{ form_row(form.bill) }}
-        </div>
-
-        <div class="my-custom-class-for-errors">
-            {{ form_errors(form) }}
-        </div>
-    {{ form_end(form) }}
-
-    {# si le formulaire a été envoyé #}
-    {% if submittedData %}
-        {# section avec les estimations utilisateur #}
-        <section>
-            <h2>{{ section.h2 }}</h2>
-            {{ dump(data) }}
-        </section>
-    {% endif %}
 {% endblock %}

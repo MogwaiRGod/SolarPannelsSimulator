@@ -23,14 +23,25 @@ class EstimationFormType extends AbstractType
             ])
             ->add('bill', NumberType::class, [
                 'label' => 'Facture énergétique annuelle',
+                'attr' => array(
+                    'placeholder' => '€'
+                )
             ])
             ->add('length', NumberType::class, [
                 'label' => 'Longueur du toit',
+                'attr' => array(
+                    'placeholder' => 'm'
+                )
             ])
             ->add('width', NumberType::class, [
                 'label' => 'Largeur du toit',
+                'attr' => array(
+                    'placeholder' => 'm'
+                )
             ])
-            ->add('Calculer', SubmitType::class)
+            ->add('send', SubmitType::class, [
+                'label' => 'Calculer',
+            ])
             ->getForm();
 
         return $form;
