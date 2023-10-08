@@ -14,7 +14,7 @@ Docker pour conteneuriser l'application lors du développement.
 ## Installation
 
 1. Installer Docker
-2. Créer un répertoire vide
+2. Créer un répertoire vide nommé "solar"
 4. Instancier un container php, mysql, nginx et PHPMyAdmin :
    - Créer un répertoire php (y mettre le Dockerfile)
    - Remonter dans le répertoire initial et y mettre Docker-compose.yml
