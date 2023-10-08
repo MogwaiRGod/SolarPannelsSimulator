@@ -10,6 +10,3 @@ Simulateur en ligne d'installation de panneaux photovoltaïques.
 
 ### Docker
 Docker pour conteneuriser l'application lors du développement.
-
-### Hostinger
-Pour héberger l'application.
