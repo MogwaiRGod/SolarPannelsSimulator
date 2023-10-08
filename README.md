@@ -10,3 +10,16 @@ Simulateur en ligne d'installation de panneaux photovoltaïques.
 
 ### Docker
 Docker pour conteneuriser l'application lors du développement.
+
+## Installation
+
+1. Installer Docker
+2. Créer un répertoire vide
+4. Instancier un container php, mysql, nginx et PHPMyAdmin :
+   - Créer un répertoire php (y mettre le Dockerfile)
+   - Remonter dans le répertoire initial et y mettre Docker-compose.yml
+   - Dans une console, se placer dans celui-ci et entrer : ``docker compose up -d``
+5. S'assurer que le container tourne
+6. Créer un répertoire app et se placer dedans
+8. ``Git clone lien_du_repo`` ou télécharger le dépôt
+9. Entrer localhost dans un navigateur pour accéder à l'application
