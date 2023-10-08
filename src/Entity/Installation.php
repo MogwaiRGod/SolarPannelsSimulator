@@ -6,6 +6,7 @@ use App\Repository\InstallationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Pannel;
 
 #[ORM\Entity(repositoryClass: InstallationRepository::class)]
 class Installation
@@ -18,23 +19,41 @@ class Installation
     #[ORM\OneToOne(inversedBy: 'installation', cascade: ['persist', 'remove'])]
     private ?Roof $idRoof = null;
 
+    // les panneaux que l'installation peut contenir
     #[ORM\OneToMany(mappedBy: 'installation', targetEntity: Pannel::class)]
     private Collection $idPannel;
 
+    // puissance de l'installation
     #[ORM\Column(nullable: true)]
     private ?float $power = null;
 
+    // puissance recommandée du système en kWc
+    #[ORM\Column(nullable: true)]
+    private ?int $reqPow = null;
+
+    // nombre de panneaux requis
     #[ORM\Column(nullable: true)]
     private ?int $nbReqPann = null;
 
+    // 70% (pour 70% d'économie d'énergie)
     #[ORM\Column(nullable: true)]
-    private ?float $reqPow = null;
+    private static ?float $purcentEnergySaved = 0.7;
 
+    // production idéale de l'installation en kWh
     #[ORM\Column(nullable: true)]
-    private ?float $purcentEnergySaved = 0.7;
+    private ?float $idealProduction = null;
 
-    public function __construct()
+    // nombre de panneaux maximum que la toiture peut contenir
+    #[ORM\Column(nullable: true)]
+    private ?int $nbPannMax = null;
+
+    public function __construct(?Roof $rf)
     {
+        $this->idRoof = $rf;
+        $this->idealProduction = $this->calculateIdealProduction();
+        $this->reqPow = $this->calculateReqPow();
+        $this->nbReqPann = $this->calculateNbReqPann();
+        $this->nbPannMax = $this->calculateNbPannMax();
         $this->idPannel = new ArrayCollection();
     }
 
@@ -97,16 +116,13 @@ class Installation
         return $this;
     }
 
-    public function getNbReqPann(): ?int
+    private function calculateReqPow(): ?int
     {
-        return $this->nbReqPann;
-    }
+        if (!is_null($this->idealProduction)) {
+            return (int)($this->idealProduction / 1460);
+        }
 
-    public function setNbReqPann(?int $nbReqPann): static
-    {
-        $this->nbReqPann = $nbReqPann;
-
-        return $this;
+        return null;
     }
 
     public function getReqPow(): ?float
@@ -114,7 +130,21 @@ class Installation
         return $this->reqPow;
     }
 
-    public function setReqPow(?float $reqPow): static
+    /**
+     * @return ?int
+     * 
+     * méthode retournant la puissance de l'installation en Wc
+     */
+    public function getReqPowWc(): ?int
+    {
+        if (!is_null($this->reqPow)) {
+            return $this->reqPow * 1000;
+        }
+        
+        return null;
+    }
+
+    public function setReqPow(?int $reqPow): static
     {
         $this->reqPow = $reqPow;
 
@@ -129,6 +159,82 @@ class Installation
     public function setPurcentEnergySaved(?float $purcentMonSaved): static
     {
         $this->purcentMonSaved = $purcentMonSaved;
+
+        return $this;
+    }
+
+    /**
+     * @return ?float : production idéale arrondi à 2 décimales après la virgule
+     */
+    private function calculateIdealProduction(): ?float
+    {
+        if (!is_null($this->idRoof)) {
+            return round($this->idRoof->getUser()->getIdConsumption()->getEnergy() * self::$purcentEnergySaved);
+        }
+
+        return null;
+    }
+
+    public function getIdealProduction(): ?float
+    {
+        return $this->idealProduction;
+    }
+
+    public function setIdealProduction(?float $idealProduction): static
+    {
+        $this->idealProduction = $idealProduction;
+
+        return $this;
+    }
+
+    /**
+     * méthode retournant le nombre de panneaux requis pour faire 70% d'économies d'énergie
+     * 
+     * @return ?int
+     */
+    private function calculateNbReqPann(): ?int
+    {
+        if (!is_null($this->reqPow)) {
+            return round($this->getReqPowWc() / Pannel::getPower());
+        }
+
+        return null;
+    }
+
+    public function getNbReqPann(): ?int
+    {
+        return $this->nbReqPann;
+    }
+
+    public function setNbReqPann(?int $nbReqPann): static
+    {
+        $this->nbReqPann = $nbReqPann;
+
+        return $this;
+    }
+
+    /**
+     * @return int : nombre de panneaux maximum que la toiture peut accueillir
+     */
+    private function calculateNbPannMax(): int
+    {
+        $tmpNbReqPann = $this->nbReqPann;
+
+        while (Pannel::getWidth() * Pannel::getLength() * $tmpNbReqPann > $this->idRoof->getArea()) {
+            $tmpNbReqPann--;
+        }
+
+        return $tmpNbReqPann;
+    }
+
+    public function getNbPannMax(): ?int
+    {
+        return $this->nbPannMax;
+    }
+
+    public function setNbPannMax(?int $nbPannMax): static
+    {
+        $this->nbPannMax = $nbPannMax;
 
         return $this;
     }

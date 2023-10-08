@@ -13,21 +13,29 @@ class Consumption
     #[ORM\Column]
     private ?int $id = null;
 
+    // montant de la facture énergétique annuelle
     #[ORM\Column(nullable: true)]
     private ?float $bill = null;
 
+    // consommation annuelle en kWh
     #[ORM\Column(nullable: true)]
     private ?float $energy = null;
 
+    // prix du kWh (en €)
     #[ORM\Column(nullable: true)]
-    public static $energyPrice = 0.2;
+    private static $energyPrice = 0.2;
 
+    // estimation de l'économie d'énergie
     #[ORM\Column(nullable: true)]
     private ?float $energySaved = null;
 
-    public function __construct(?float $bll = null)
+    #[ORM\OneToOne(mappedBy: 'idConsumption', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
+    public function __construct(?float $bll = null, ?User $usr = null)
     {
         $this->bill = $bll;
+        $this->user = $usr;
         $this->energy = $this->calculateEnergy();
         
     }
@@ -88,7 +96,7 @@ class Consumption
         return $this;
     }
 
-    public function geteEnergySaved(): ?float
+    public function getEnergySaved(): ?float
     {
         return $this->energySaved;
     }
@@ -96,6 +104,28 @@ class Consumption
     public function setEnergySaved(?float $energySaved): static
     {
         $this->energySaved = $energySaved;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setIdConsumption(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getIdConsumption() !== $this) {
+            $user->setIdConsumption($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
