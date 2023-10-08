@@ -168,7 +168,6 @@ class Installation
      */
     private function calculateIdealProduction(): ?float
     {
-        dump($this->idRoof);
         if (!is_null($this->idRoof)) {
             return round($this->idRoof->getUser()->getIdConsumption()->getEnergy() * self::$purcentEnergySaved);
         }

@@ -31,6 +31,10 @@
     color: var(--medium-green);
 }
 
+.solar-nav-link:focus {
+    color: var(--light-yellow);
+}
+
 .navbar-brand {
     width: fit-content;
 }
@@ -55,11 +59,23 @@
     color: var(--medium-green);
 }
 
+.solar-nav-item a:focus {
+    color: var(--light-yellow);
+}
+
 /* headings */
 .solar-h1 {
     font-family: var(--main-font);
     color: var(--main-yellow);
     font-size: rem;
+}
+
+.solar-h2 {
+    font-family: var(--main-font);
+    font-weight: 300;
+    color: var(--medium-green);
+    font-size: 2rem;
+    margin-bottom: 3rem;
 }
 
 .solar-h3 {
@@ -69,10 +85,17 @@
     font-size: 2rem;
 }
 
+.solar-h4 {
+    font-family: var(--main-font);
+    font-weight: 500;
+    color: var(--main-green);
+    font-size: 1.5rem;
+}
+
 /* buttons */
 button {
     background-color: var(--main-green);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-family: var(--main-font);
     font-weight: 300;
     color: var(--light-yellow);
@@ -94,7 +117,6 @@ form {
 .solar-form-row {
     font-family: var(--main-font);
     color: var(--main-green);
-    margin: 1rem 0;
 }
 
 .solar-form-row div {

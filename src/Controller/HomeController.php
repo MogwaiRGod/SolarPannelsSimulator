@@ -20,13 +20,20 @@ class HomeController extends AbstractController
         // booléen indiquant si le formulaire a été envoyé
         $submittedData = false;
         // données envoyées dans le formulaire
-        $data = null;
+        $results = null;
         // autres données sur la page
         $header = [
             'h1' => "Faites une estimation en ligne",
         ];
         $section = [
             'h2' => "Mes avantages",
+        ];
+        $formTemplate = [
+            'h3' => "Je calcule mes avantages",
+            'cover' => [
+                'path' => 'images/man_pannel.jpg',
+                'alt' => 'Homme posant un panneau photovoltaïque',
+            ],
         ];
         
         // le formulaire
@@ -36,8 +43,8 @@ class HomeController extends AbstractController
         
         // si le formulaire est validé
         if ($form->isSubmitted() && $form->isValid()) {
-            // récupération des données du formulaire
-            $data = $this->manageSubmittedData($form->getData());
+            // récupération et traitement des données du formulaire
+            $results = $this->manageSubmittedData($form->getData());
             // màj du booléen correspondant
             $submittedData = true;
         }
@@ -46,9 +53,10 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'submittedData' => $submittedData,
             'form' => $form,
-            'data' => $data,
+            'results' => $results,
             'header' => $header,
-            'section' => $section
+            'section' => $section,
+            'formTemplate' => $formTemplate,
         ]);
     }
 

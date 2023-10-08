@@ -18,17 +18,36 @@
 /* le formulaire */
 /* container */
 .solar-form {
-    padding: 3.5rem 1.5rem;
+    padding: 2rem 1rem;
     z-index: 1;
     position: absolute;
     background-color: var(--transparent-white);
     border: 2px solid var(--medium-green);
     border-radius: 2rem;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 .solar-buttons {
     width: 50vw;
     padding: 0;
+}
+
+/* section de résultats */
+.solar-section {
+    margin-top: 6rem;
+    margin-bottom: 5rem;
+}
+
+/* paragraphe */
+.solar-p {
+    font-family: var(--main-font);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--medium-green);
+    line-height: 1.5rem;
+}
+
+/* bouton */
+.solar-button {
+    margin-top: 5rem;
+    margin-bottom: 3rem;
 }
